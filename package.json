@@ -21,10 +21,10 @@
     "node": ">=0.8.0"
   },
   "dependencies": {
-    "jsonwebtoken": "^1.1.2"
+    "jsonwebtoken": "^5.0.0"
   },
   "devDependencies": {},
   "scripts": {
-    "postinstall": "scripts/postinstall.js"
+    "CANCELLEDpostinstall": "scripts/postinstall.js"
   }
 }

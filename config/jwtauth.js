@@ -42,3 +42,18 @@ exports.production = {
     }
   }
 }
+
+exports.singlebox = { 
+  jwtauth: function(api){
+    return {
+      enabled: {
+        web: true,
+        websocket: true,
+        socket: false,
+        testServer: false
+      },
+      secret: 'good food is better than fake food',
+      algorithm: 'HS512'
+    }
+  }
+}

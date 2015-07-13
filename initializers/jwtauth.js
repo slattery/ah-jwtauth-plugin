@@ -11,6 +11,7 @@ module.exports = {
       // success and fail cb are in the middleware
       processToken: function(token, success, fail) {
         var secret = 'good food is better than fake food';
+        console.log('processing token');
         if ( api.config.jwtauth && api.config.jwtauth.secret ){
           secret = api.config.jwtauth.secret;
         }     

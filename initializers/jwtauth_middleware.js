@@ -5,17 +5,21 @@ module.exports = {
 
      name: 'jwtauth simple',
       global: true,
-      priority: 200,
+      priority: 10,
       preProcessor: function(data, next){
-
 
         if(data.actionTemplate.authenticated === true 
          && api.config.jwtauth.enabled[data.connection.type] 
          && api.config.jwtauth.enabled[data.connection.type] === true) {
+         console.log('starting jwtquc');
           var req = data.connection.rawConnection.req;
           if(!req && data.connection.mockHeaders) {
             req = {
               headers: data.connection.mockHeaders
+            };
+          } else { //this needs rethinking
+            req = {
+              headers: {}
             };
           }
           if(req.headers && req.headers['authorization']) {
@@ -40,6 +44,7 @@ module.exports = {
               } else {
                 api.jwtauth.processToken(parts[1], function(jdata) {
                   // Valid data, lets set it and continue
+                  console.log('setting user for token');
                   data.connection.user = jdata;
                   data.params.jwtuser = jdata;
                   next();
@@ -53,10 +58,11 @@ module.exports = {
               }
             } 
           } else if (data.params.token){
-            console.log('token param found');
+            console.log('token param found in middleware');
                 api.jwtauth.processToken(data.params.token, function(jdata) {
                   // Valid data, lets set it and continue
                   data.connection.user = jdata;
+                  data.connection.rawConnection.user = jdata
                   data.params.jwtuser = jdata;
                   next();
                 }, function(err) {
@@ -87,7 +93,7 @@ module.exports = {
       }
       */
     }
-      api.actions.addMiddleware(jwtauth_middleware);
+     api.actions.addMiddleware(jwtauth_middleware);
 
       next();
 
